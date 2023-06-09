@@ -17,16 +17,16 @@ public class ProtostuffUtil {
     private static final ThreadLocal<LinkedBuffer> BUFFER_THREAD_LOCAL = ThreadLocal.withInitial(() ->
             LinkedBuffer.allocate(512));
 
-    public static <T> byte[] serializer(T object) {
+    public static <T> byte[] serialize(T object) {
         if (isCollection(object)) {
-            return serializerCollection(object);
+            return serializeCollection(object);
         } else {
-            return serializerObject(object);
+            return serializeObject(object);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> byte[] serializerObject(T object) {
+    public static <T> byte[] serializeObject(T object) {
         Schema<T> schema = RuntimeSchema.getSchema((Class<T>) object.getClass());
         LinkedBuffer buffer = BUFFER_THREAD_LOCAL.get();
         try {
@@ -36,7 +36,7 @@ public class ProtostuffUtil {
         }
     }
 
-    public static <T> T deserializerObject(byte[] data, Class<T> classType) {
+    public static <T> T deserializeObject(byte[] data, Class<T> classType) {
         Schema<T> schema = RuntimeSchema.getSchema(classType);
         T message = schema.newMessage();
         ProtostuffIOUtil.mergeFrom(data, message, schema);
@@ -44,26 +44,17 @@ public class ProtostuffUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T deserializerObject(byte[] data, String className) throws ClassNotFoundException {
-        return deserializerObject(data, (Class<T>) Class.forName(className));
+    public static <T> T deserializeObject(byte[] data, String className) throws ClassNotFoundException {
+        return deserializeObject(data, (Class<T>) Class.forName(className));
     }
 
-    public static <T> byte[] serializerCollection(T collection) {
-        ProtostuffMessage protostuffMessage = ProtostuffMessage.build(collection);
-        Schema<ProtostuffMessage> schema = RuntimeSchema.getSchema(ProtostuffMessage.class);
-        LinkedBuffer buffer = BUFFER_THREAD_LOCAL.get();
-        try {
-            return ProtostuffIOUtil.toByteArray(protostuffMessage, schema, buffer);
-        } finally {
-            buffer.clear();
-        }
+    public static <T> byte[] serializeCollection(T collection) {
+        return serializeObject(ProtostuffMessage.build(collection));
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T deserializerCollection(byte[] data) {
-        Schema<ProtostuffMessage> schema = RuntimeSchema.getSchema(ProtostuffMessage.class);
-        ProtostuffMessage message = schema.newMessage();
-        ProtostuffIOUtil.mergeFrom(data, message, schema);
+    public static <T> T deserializeCollection(byte[] data) {
+        ProtostuffMessage message = deserializeObject(data, ProtostuffMessage.class);
         return (T) message.getData();
     }
 

@@ -28,20 +28,20 @@ public class CommonDeserializer implements Deserializer<Object> {
         }
         switch (dataTypeEnum) {
             case PROTOSTUFF_COLLECTION:
-                return ProtostuffUtil.deserializerCollection(data);
+                return ProtostuffUtil.deserializeCollection(data);
             case PROTOSTUFF_OBJECT: {
                 String className = getSerializeClassName(headers);
                 if (StringUtils.isBlank(className)) {
                     throw new IllegalStateException("Header className not exists");
                 }
                 try {
-                    return ProtostuffUtil.deserializerObject(data, className);
+                    return ProtostuffUtil.deserializeObject(data, className);
                 } catch (ClassNotFoundException e) {
                     throw new IllegalStateException("Class " + className + " not found");
                 }
             }
             default:
-                throw new UnsupportedOperationException("Unsupported serializer data type");
+                throw new UnsupportedOperationException("Unsupported serialize data type");
         }
     }
 

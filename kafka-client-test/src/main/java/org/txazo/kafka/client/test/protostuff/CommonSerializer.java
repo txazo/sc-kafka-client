@@ -29,7 +29,7 @@ public class CommonSerializer<T> implements Serializer<T> {
             if (!ProtostuffUtil.isCollection(data)) {
                 headers.add(ProtostuffConstant.HEADER_CLASS_NAME_KEY, STRING_SERIALIZER.serialize(null, data.getClass().getName()));
             }
-            return ProtostuffUtil.serializer(data);
+            return ProtostuffUtil.serialize(data);
         }
     }
 

@@ -21,13 +21,13 @@ public class ProtostuffUtilTest {
         List<User> userList = Lists.newArrayList(user1, user2);
 
         byte[] jsonBytes = GsonUtil.toJsonString(user1).getBytes(StandardCharsets.UTF_8.name());
-        byte[] protostuffBytes = ProtostuffUtil.serializer(user1);
-        User protostuffUser1 = ProtostuffUtil.deserializerObject(protostuffBytes, User.class);
+        byte[] protostuffBytes = ProtostuffUtil.serialize(user1);
+        User protostuffUser1 = ProtostuffUtil.deserializeObject(protostuffBytes, User.class);
         System.out.printf("%d %d %s %n", jsonBytes.length, protostuffBytes.length, Objects.equals(user1, protostuffUser1));
 
         jsonBytes = GsonUtil.toJsonString(userList).getBytes(StandardCharsets.UTF_8.name());
-        protostuffBytes = ProtostuffUtil.serializer(userList);
-        List<User> protostuffUserList = ProtostuffUtil.deserializerCollection(protostuffBytes);
+        protostuffBytes = ProtostuffUtil.serialize(userList);
+        List<User> protostuffUserList = ProtostuffUtil.deserializeCollection(protostuffBytes);
         System.out.printf("%d %d %s %n", jsonBytes.length, protostuffBytes.length, Objects.equals(userList, protostuffUserList));
     }
 
