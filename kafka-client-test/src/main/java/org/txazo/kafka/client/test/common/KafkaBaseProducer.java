@@ -18,10 +18,12 @@ public class KafkaBaseProducer {
                 final int num = i;
                 ProducerRecord<String, Object> record = new ProducerRecord<>(topic, valueFunction.apply(num));
                 kafkaProducer.send(record, (metadata, exception) ->
-                        System.out.println("Kafka callback " + num + " metadata: " + metadata.partition()
-                                + " " + metadata.offset() + " exception: " + exception)
+                        System.out.println("Kafka callback " + num + " partition: " + metadata.partition()
+                                + " offset: " + metadata.offset() + " exception: " + exception)
                 );
-                Thread.sleep(sleep);
+                if (sleep > 0) {
+                    Thread.sleep(sleep);
+                }
             }
             Thread.sleep(1000 * 60 * 60);
         } catch (Exception e) {

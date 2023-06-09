@@ -9,10 +9,8 @@ public enum SerializerDataTypeEnum {
     /**
      * 序列化数据类型
      */
-    BYTE_ARRAY((byte) 0),
-    STRING((byte) 1),
-    PROTOSTUFF_OBJECT((byte) 2),
-    PROTOSTUFF_COLLECTION((byte) 3);
+    PROTOSTUFF_OBJECT((byte) 1),
+    PROTOSTUFF_COLLECTION((byte) 2);
 
     private final byte dataType;
 

@@ -1,6 +1,6 @@
 package org.txazo.kafka.client.test.bean;
 
-import lombok.AllArgsConstructor;
+import io.protostuff.Tag;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,18 +13,30 @@ import java.util.Objects;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
+    @Tag(1)
     private Long id;
 
+    @Tag(2)
     private String userName;
 
+    @Tag(3)
     private Integer age;
 
+    @Tag(4)
     private Date createTime;
 
+    @Tag(5)
     private Date updateTime;
+
+    public User(Long id, String userName, Integer age, Date createTime, Date updateTime) {
+        this.id = id;
+        this.userName = userName;
+        this.age = age;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -35,8 +47,7 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(age, user.age)
-                && Objects.equals(createTime, user.createTime) && Objects.equals(updateTime, user.updateTime);
+        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(age, user.age) && Objects.equals(createTime, user.createTime) && Objects.equals(updateTime, user.updateTime);
     }
 
     @Override

@@ -10,7 +10,6 @@ import org.apache.kafka.common.serialization.StringSerializer;
  */
 public class CommonSerializer<T> implements Serializer<T> {
 
-    private static final String DATA_TYPE = ":data_type";
     private static final StringSerializer STRING_SERIALIZER = new StringSerializer();
 
     @Override
@@ -22,21 +21,20 @@ public class CommonSerializer<T> implements Serializer<T> {
     public byte[] serialize(String topic, Headers headers, T data) {
         if (data == null) {
             return null;
-        } else if (data instanceof byte[]) {
-            setSerializerDataType(headers, SerializerDataTypeEnum.BYTE_ARRAY);
-            return (byte[]) data;
         } else if (data instanceof String) {
-            setSerializerDataType(headers, SerializerDataTypeEnum.STRING);
             return STRING_SERIALIZER.serialize(topic, headers, (String) data);
         } else {
             setSerializerDataType(headers, ProtostuffUtil.isCollection(data) ?
                     SerializerDataTypeEnum.PROTOSTUFF_COLLECTION : SerializerDataTypeEnum.PROTOSTUFF_OBJECT);
-            return ProtostuffUtil.serializerObject(data);
+            if (!ProtostuffUtil.isCollection(data)) {
+                headers.add(ProtostuffConstant.HEADER_CLASS_NAME_KEY, STRING_SERIALIZER.serialize(null, data.getClass().getName()));
+            }
+            return ProtostuffUtil.serializer(data);
         }
     }
 
     private void setSerializerDataType(Headers headers, SerializerDataTypeEnum dataType) {
-        headers.add(DATA_TYPE, new byte[]{dataType.getDataType()});
+        headers.add(ProtostuffConstant.HEADER_DATA_TYPE_KEY, new byte[]{dataType.getDataType()});
     }
 
 }

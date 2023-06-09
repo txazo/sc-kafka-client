@@ -43,6 +43,11 @@ public class ProtostuffUtil {
         return message;
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T> T deserializerObject(byte[] data, String className) throws ClassNotFoundException {
+        return deserializerObject(data, (Class<T>) Class.forName(className));
+    }
+
     public static <T> byte[] serializerCollection(T collection) {
         ProtostuffMessage protostuffMessage = ProtostuffMessage.build(collection);
         Schema<ProtostuffMessage> schema = RuntimeSchema.getSchema(ProtostuffMessage.class);

@@ -16,7 +16,8 @@ public class KafkaConsumerTest extends KafkaBaseConsumer {
     public void test01() {
         Properties properties = PropertiesUtil.getConsumerBaseProperties();
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "my-consumer-group");
-        consume(properties, "");
+        consume(properties, "", false, (key, value) -> {
+        });
     }
 
 }
