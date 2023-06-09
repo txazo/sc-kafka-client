@@ -14,16 +14,16 @@ import java.util.Properties;
 /**
  * @author xiaozhou.tu
  */
-public class KafkaProtostuffObjectTest extends KafkaBaseProducerConsumer {
+public class KafkaProtostuffListTest extends KafkaBaseProducerConsumer {
 
-    private static final String TOPIC = "my-kafka-topic-test-006";
+    private static final String TOPIC = "my-kafka-topic-test-008";
     private static final String GROUP_ID = "my-consumer-group-01";
 
     @Test
     public void testProducer() {
         Properties properties = PropertiesUtil.getProducerBaseProperties();
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CommonSerializer.class.getName());
-        produce(properties, TOPIC, 1000, 2000, this::newRandomUser);
+        produce(properties, TOPIC, 1000, 2000, this::newRandomUserList);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class KafkaProtostuffObjectTest extends KafkaBaseProducerConsumer {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, CommonDeserializer.class.getName());
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         consume(properties, TOPIC, false, (key, value) ->
-                System.out.println("Consume Protostuff Object: " + GsonUtil.toJsonString(value))
+                System.out.println("Consume Protostuff List: " + GsonUtil.toJsonString(value))
         );
     }
 

@@ -1,14 +1,20 @@
 package org.txazo.kafka.client.test.common;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.txazo.kafka.client.test.bean.User;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -61,6 +67,19 @@ public class KafkaBaseProducerConsumer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected User newRandomUser(int num) {
+        return new User((long) num, RandomStringUtils.randomAlphabetic(10), RandomUtils.nextInt(0, 100), new Date(), new Date());
+    }
+
+    protected List<User> newRandomUserList(int num) {
+        List<User> userList = Lists.newArrayList();
+        int size = RandomUtils.nextInt(1, 10);
+        for (int i = 0; i < size; i++) {
+            userList.add(newRandomUser(num));
+        }
+        return userList;
     }
 
 }
