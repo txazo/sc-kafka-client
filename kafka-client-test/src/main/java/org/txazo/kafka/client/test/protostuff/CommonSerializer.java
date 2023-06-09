@@ -24,7 +24,7 @@ public class CommonSerializer<T> implements Serializer<T> {
         } else if (data instanceof String) {
             return STRING_SERIALIZER.serialize(topic, headers, (String) data);
         } else {
-            setSerializerDataType(headers, ProtostuffUtil.isCollection(data) ?
+            setSerializeDataType(headers, ProtostuffUtil.isCollection(data) ?
                     SerializerDataTypeEnum.PROTOSTUFF_COLLECTION : SerializerDataTypeEnum.PROTOSTUFF_OBJECT);
             if (!ProtostuffUtil.isCollection(data)) {
                 headers.add(ProtostuffConstant.HEADER_CLASS_NAME_KEY, STRING_SERIALIZER.serialize(null, data.getClass().getName()));
@@ -33,7 +33,7 @@ public class CommonSerializer<T> implements Serializer<T> {
         }
     }
 
-    private void setSerializerDataType(Headers headers, SerializerDataTypeEnum dataType) {
+    private void setSerializeDataType(Headers headers, SerializerDataTypeEnum dataType) {
         headers.add(ProtostuffConstant.HEADER_DATA_TYPE_KEY, new byte[]{dataType.getDataType()});
     }
 
