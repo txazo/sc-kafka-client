@@ -1,0 +1,15 @@
+org/txazo/kafka/client/test/common/GsonUtil.class
+org/txazo/kafka/client/test/protostuff/ProtostuffUtil.class
+org/txazo/kafka/client/test/common/KafkaBaseProducer.class
+org/txazo/kafka/client/test/KafkaConsumerTest.class
+org/txazo/kafka/client/test/protostuff/CommonDeserializer.class
+org/txazo/kafka/client/test/KafkaProducerTest.class
+org/txazo/kafka/client/test/bean/User.class
+org/txazo/kafka/client/test/protostuff/ProtostuffMessage.class
+org/txazo/kafka/client/test/protostuff/CommonDeserializer$1.class
+org/txazo/kafka/client/test/protostuff/CommonSerializer.class
+org/txazo/kafka/client/test/common/KafkaBaseConsumer.class
+org/txazo/kafka/client/test/protostuff/ProtostuffUtilTest.class
+org/txazo/kafka/client/test/compress/KafkaCompressTest.class
+org/txazo/kafka/client/test/protostuff/SerializerDataTypeEnum.class
+org/txazo/kafka/client/test/common/PropertiesUtil.class

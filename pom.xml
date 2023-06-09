@@ -10,4 +10,12 @@
 
     <name>sc-kafka-client</name>
 
+    <modules>
+        <module>kafka-client-test</module>
+    </modules>
+
+    <properties>
+        <jdk.version>17</jdk.version>
+    </properties>
+
 </project>

@@ -1,0 +1,14 @@
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/common/GsonUtil.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/ProtostuffUtilTest.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/compress/KafkaCompressTest.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/SerializerDataTypeEnum.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/CommonSerializer.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/ProtostuffMessage.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/ProtostuffUtil.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/bean/User.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/KafkaConsumerTest.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/KafkaProducerTest.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/common/PropertiesUtil.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/common/KafkaBaseProducer.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/common/KafkaBaseConsumer.java
+/Users/xiaozhou.tu/JavaProject/sc-kafka-client/kafka-client-test/src/main/java/org/txazo/kafka/client/test/protostuff/CommonDeserializer.java
