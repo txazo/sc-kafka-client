@@ -2,6 +2,7 @@ package org.txazo.kafka.client.test.test;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.RoundRobinPartitioner;
 import org.junit.Test;
 import org.txazo.kafka.client.test.bean.User;
 import org.txazo.kafka.client.test.common.GsonUtil;
@@ -17,14 +18,15 @@ import java.util.Properties;
  */
 public class KafkaProtostuffStringTest extends KafkaBaseProducerConsumer {
 
-    private static final String TOPIC = "my-kafka-topic-test-007";
-    private static final String GROUP_ID = "my-consumer-group-01";
+    private static final String TOPIC = "my-kafka-topic-test-008";
+    private static final String GROUP_ID = "my-consumer-group-20";
 
     @Test
     public void testProducer() {
         Properties properties = PropertiesUtil.getProducerBaseProperties();
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CommonSerializer.class.getName());
-        produce(properties, TOPIC, 1000, 2000, num -> GsonUtil.toJsonString(newRandomUser(num)));
+        properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, RoundRobinPartitioner.class.getName());
+        produce(properties, TOPIC, 10, 10, num -> GsonUtil.toJsonString(newRandomUser(num)));
     }
 
     @Test

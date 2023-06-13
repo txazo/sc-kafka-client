@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 /**
  * @author xiaozhou.tu
@@ -46,12 +47,24 @@ public class KafkaBaseProducerConsumer {
         }
     }
 
+    public void consume(Properties properties, Pattern pattern, boolean log, BiConsumer<String, Object> keyValueCallback) {
+        consume(properties, null, pattern, log, keyValueCallback);
+    }
+
     public void consume(Properties properties, String topic, boolean log, BiConsumer<String, Object> keyValueCallback) {
+        consume(properties, topic, null, log, keyValueCallback);
+    }
+
+    private void consume(Properties properties, String topic, Pattern pattern, boolean log, BiConsumer<String, Object> keyValueCallback) {
         long startTime = System.currentTimeMillis();
         try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties)) {
-            consumer.subscribe(Collections.singletonList(topic));
+            if (topic != null) {
+                consumer.subscribe(Collections.singletonList(topic));
+            } else {
+                consumer.subscribe(pattern);
+            }
             while (System.currentTimeMillis() - startTime < MAX_TIME) {
-                ConsumerRecords<String, String> consumerRecords = consumer.poll(Duration.of(1, ChronoUnit.SECONDS));
+                ConsumerRecords<String, String> consumerRecords = consumer.poll(Duration.of(1000, ChronoUnit.MILLIS));
                 if (consumerRecords != null && !consumerRecords.isEmpty()) {
                     for (ConsumerRecord<String, String> consumerRecord : consumerRecords) {
                         if (log) {
