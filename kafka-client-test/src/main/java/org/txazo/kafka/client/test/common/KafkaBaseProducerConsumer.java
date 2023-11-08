@@ -16,6 +16,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -52,14 +54,18 @@ public class KafkaBaseProducerConsumer {
     }
 
     public void consume(Properties properties, String topic, boolean log, BiConsumer<String, Object> keyValueCallback) {
-        consume(properties, topic, null, log, keyValueCallback);
+        consume(properties, Collections.singletonList(topic), null, log, keyValueCallback);
     }
 
-    private void consume(Properties properties, String topic, Pattern pattern, boolean log, BiConsumer<String, Object> keyValueCallback) {
+    public void consume(Properties properties, List<String> topicList, boolean log, BiConsumer<String, Object> keyValueCallback) {
+        consume(properties, topicList, null, log, keyValueCallback);
+    }
+
+    private void consume(Properties properties, List<String> topicList, Pattern pattern, boolean log, BiConsumer<String, Object> keyValueCallback) {
         long startTime = System.currentTimeMillis();
         try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties)) {
-            if (topic != null) {
-                consumer.subscribe(Collections.singletonList(topic));
+            if (topicList != null) {
+                consumer.subscribe(topicList);
             } else {
                 consumer.subscribe(pattern);
             }
@@ -79,6 +85,14 @@ public class KafkaBaseProducerConsumer {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void multiConsume(int size, Properties properties, List<String> topicList, boolean log, BiConsumer<String, Object> keyValueCallback) throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(size);
+        for (int i = 0; i < size; i++) {
+            executor.submit(() -> consume(properties, topicList, log, keyValueCallback));
+            Thread.sleep(100);
         }
     }
 
